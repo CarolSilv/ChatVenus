@@ -24,12 +24,17 @@ final class UsuarioController
         $email = $dados['E_MAIL'];
         $numero = $dados['NUMERO'];
         $usuarioDAO = new UsuarioDAO();
-        $usuarioDAO->insertUsuario($chaveSecreta, $nomeFantasia, $idade, $email,
-        $numero);
-        if(!$response){
-            return $response ->withJson("Erro ao realizar cadastro.");
+        $usuarioDAO->insertUsuario(
+            $chaveSecreta,
+            $nomeFantasia,
+            $idade,
+            $email,
+            $numero
+        );
+        if (!$response) {
+            return $response->withJson("Erro ao realizar cadastro.");
         }
-        return $response ->withJson("Usuario inserido com sucesso.");
+        return $response->withJson("Usuario inserido com sucesso.");
     }
 
     public function cadastrarContatos(Request $request, Response $response, $args)
@@ -41,10 +46,10 @@ final class UsuarioController
         $mensagem = $dadosContatos['Mensagem'];
         $usuarioDAO = new UsuarioDAO();
         $usuarioDAO->insertContato($chave, $numeroRelacionado, $nomeContato, $mensagem);
-        if(!$response){
-            return $response ->withJson("Erro ao inserir contato.");
+        if (!$response) {
+            return $response->withJson("Erro ao inserir contato.");
         }
-        return $response ->withJson("Contato inserido com sucesso.");
+        return $response->withJson("Contato inserido com sucesso.");
     }
 
     public function buscarContatos(Request $request, Response $response, $args)
@@ -52,8 +57,8 @@ final class UsuarioController
         $chave = $args['CHAVE_SECRETA'];
         $usuarioDAO = new UsuarioDAO();
         $contatos = $usuarioDAO->getContatos($chave);
-        if(!$response){
-            return $response ->withJson("Erro ao buscar contatos.");
+        if (!$response) {
+            return $response->withJson("Erro ao buscar contatos.");
         }
         $response = $response->withJson($contatos);
         return $response;
@@ -65,33 +70,35 @@ final class UsuarioController
         $numeroRelacionado = $request->getParsedBody()['numero'];
         $usuarioDAO = new UsuarioDAO();
         $usuarioDAO->deleteContato($chave, $numeroRelacionado);
-        if(!$response){
-            return $response ->withJson("Erro ao excluir contato.");
+        if (!$response) {
+            return $response->withJson("Erro ao excluir contato.");
         }
-        return $response ->withJson("Contato excluido com sucesso.");
+        return $response->withJson("Contato excluido com sucesso.");
     }
 
     public function autenticarUsuario(Request $request, Response $response, $args)
     {
         $data = $request->getParsedBody();
-            $usuario = $data['ID_USER'];
-            $senha = $data['SENHA'];
-            $usuarioSDAO = new UsuarioDAO();
-            $user = $usuarioSDAO->getUser($usuario, $senha);
-            if(!$response){
-                return $response->withStatus(401);
-            }
-            $response = $response->withJson($user);
-            return $response;
+        $usuario = $data['ID_USUARIO'];
+        $senha = $data['SENHA'];
+        $usuarioSDAO = new UsuarioDAO();
+        $user = $usuarioSDAO->getUser($usuario, $senha);
+        if (count($user) != 0) {
 
-            // try
-            // {
-            //     $user->getUsuario();
-            //     return $response->withStatus(200);
-            // } catch(\Throwable $e)
-            // {
-                
-            // }
-            // return $response;
+            return $response->withJson(array(
+                "message" => "success"
+            ));
+        }
+
+        return $response->withStatus(401);
+        // try
+        // {
+        //     $user->getUsuario();
+        //     return $response->withStatus(200);
+        // } catch(\Throwable $e)
+        // {
+
+        // }
+        // return $response;
     }
 }

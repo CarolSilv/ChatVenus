@@ -88,6 +88,7 @@ class UsuarioDAO extends Conexao
             'ID_USER' => $usuario,
             'SENHA'=> $senha
         ]);
-        return $query->fetchAll(\PDO::FETCH_ASSOC) ?? [];
+
+        return $query->fetchAll(\PDO::FETCH_ASSOC)[0] ?? [];
     }
 }
