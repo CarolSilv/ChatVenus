@@ -4,7 +4,7 @@ namespace App\DAO;
 
 class UsuarioDAO extends Conexao
 {
-    public function insertUsuario($chaveSecreta, $nomeFantasia, $idade, $email,$numero)
+    public function insertUsuario($chaveSecreta, $nomeFantasia, $idade, $email,$numero,$senha)
     {
         $query = $this->pdo->prepare(
             "INSERT INTO api.tb_user(
@@ -12,19 +12,22 @@ class UsuarioDAO extends Conexao
             NOME_FANTASIA,
             IDADE, 
             E_MAIL, 
-            NUMERO)
+            NUMERO,
+            Senha)
             VALUES(:ID_USER, 
             :NOME_FANTASIA, 
             :IDADE, 
             :E_MAIL, 
-            :NUMERO)"
+            :NUMERO,
+            :senha)"
         );
         $query->execute([
             'ID_USER' => $chaveSecreta,
             'NOME_FANTASIA' => $nomeFantasia,
             'IDADE' => $idade,
             'E_MAIL' => $email,
-            'NUMERO' => $numero
+            'NUMERO' => $numero,
+            'senha' => $senha
         ]);
     }
 
@@ -81,7 +84,7 @@ class UsuarioDAO extends Conexao
         $query = $this->pdo->prepare(
             "SELECT *
             FROM api.tb_user
-            WHERE ID_USER = :ID_USER
+            WHERE E_MAIL = :ID_USER
             AND SENHA = :SENHA;"
         );
         $query->execute([

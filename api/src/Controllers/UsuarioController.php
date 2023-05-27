@@ -22,6 +22,7 @@ final class UsuarioController
         $nomeFantasia = $dados['NOME_FANTASIA'];
         $idade = $dados['IDADE'];
         $email = $dados['E_MAIL'];
+        $senha = $dados['SENHA'];
         $numero = $dados['NUMERO'];
         $usuarioDAO = new UsuarioDAO();
         $usuarioDAO->insertUsuario(
@@ -29,7 +30,8 @@ final class UsuarioController
             $nomeFantasia,
             $idade,
             $email,
-            $numero
+            $numero,
+            $senha
         );
         if (!$response) {
             return $response->withJson("Erro ao realizar cadastro.");
@@ -86,7 +88,8 @@ final class UsuarioController
         if (count($user) != 0) {
 
             return $response->withJson(array(
-                "message" => "success"
+                "message" => "success",
+                "dados"=>$user
             ));
         }
         return $response->withStatus(401);
@@ -102,7 +105,7 @@ final class UsuarioController
         if (!$response) {
             return $response->withJson("Erro ao atualizar contato.");
         }
-        return $response->withJson("Contato atualizado com sucesso.");
+        return $response->withJson("Contato atualizado   com sucesso.");
 
     }
 }
