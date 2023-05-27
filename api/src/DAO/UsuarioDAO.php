@@ -91,4 +91,20 @@ class UsuarioDAO extends Conexao
 
         return $query->fetchAll(\PDO::FETCH_ASSOC)[0] ?? [];
     }
+
+    public function editContato($chave, $numeroRelacionado, $nomeContato)
+    {
+        $query = $this->pdo->prepare(
+            "UPDATE api.tb_contatos 
+            SET numero = :numero,
+            nome_contato = :nome_contato
+            WHERE id_user = :id_user
+            LIMIT 1;"
+        );
+        $query->execute([
+            'numero'=> $numeroRelacionado,
+            'nome_contato'=> $nomeContato,
+            'id_user' => $chave
+        ]);
+    }
 }

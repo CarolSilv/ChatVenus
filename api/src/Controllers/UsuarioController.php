@@ -89,16 +89,20 @@ final class UsuarioController
                 "message" => "success"
             ));
         }
-
         return $response->withStatus(401);
-        // try
-        // {
-        //     $user->getUsuario();
-        //     return $response->withStatus(200);
-        // } catch(\Throwable $e)
-        // {
+    }
 
-        // }
-        // return $response;
+    public function editarContato(Request $request, Response $response, $args)
+    {
+        $chave = $args['CHAVE_SECRETA'];
+        $numeroRelacionado = $request->getParsedBody()['numero'];
+        $nomeContato = $request->getParsedBody()['nome_contato'];
+        $usuarioDAO = new UsuarioDAO();
+        $usuarioDAO->editContato($chave, $numeroRelacionado, $nomeContato);
+        if (!$response) {
+            return $response->withJson("Erro ao atualizar contato.");
+        }
+        return $response->withJson("Contato atualizado com sucesso.");
+
     }
 }

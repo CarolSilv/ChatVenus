@@ -13,6 +13,7 @@ $app->post('/cadastrarUsuario',UsuarioController::class.':cadastrarUsuario');
 $app->post('/cadastrarContato/[{CHAVE_SECRETA}]',UsuarioController::class.':cadastrarContatos');
 $app->get('/buscarContatos/[{CHAVE_SECRETA}]',UsuarioController::class.':buscarContatos');
 $app->delete('/excluirContato/[{CHAVE_SECRETA}]',UsuarioController::class.':excluirContato');
+$app->put('/editarContato/[{CHAVE_SECRETA}]',UsuarioController::class.':editarContato');
 
 
 $app->run();
