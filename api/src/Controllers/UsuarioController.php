@@ -10,7 +10,7 @@ final class UsuarioController
 {
     public function apiRun(Request $request, Response $response)
     {
-        echo 'bateu';
+        echo 'Run!';
         die();
     }
 
